@@ -11,7 +11,7 @@ services:
     links:
       - 'mysqlserver'
     networks: 
-      - 'net2'
+      - 'backend'
   mysqlserver:
     container_name: mysqlserver
     build: 
@@ -21,7 +21,7 @@ services:
     volumes:
       - database:/var/lib/mysql
     networks: 
-      - 'net2'
+      - 'backend'
     environment:
       TZ: "Europe/Warsaw"
   apache:
@@ -31,8 +31,8 @@ services:
       dockerfile: apacheHttpd.Dockerfile
     restart: always
     networks: 
-      - 'net2'
-      - 'net1'  
+      - 'backend'
+      - 'frontend'  
     depends_on: 
       - php-apache
       - mysqlserver
@@ -43,5 +43,5 @@ services:
 volumes: 
   database:
 networks:
-  net2:
-  net1:
+  backend:
+  frontend:

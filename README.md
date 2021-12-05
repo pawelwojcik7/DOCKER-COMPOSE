@@ -16,6 +16,7 @@ z projektem uruchomić komende: docker-compose up -d
 Przekierowanie zostało ustawione w pliku apache.cnf na samym dole pliku
 
 
-Wszystkie kontenery zostały podłączone do utworzonej sieci "net2"
-Kontener httpd dodatkowo został podłączony do sieci "net1"
+Wszystkie kontenery zostały podłączone do utworzonej sieci "backend"
+Kontener httpd dodatkowo został podłączony do sieci "frontend"
+
 
