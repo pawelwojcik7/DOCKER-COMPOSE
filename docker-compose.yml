@@ -1,0 +1,47 @@
+version: '3'
+services: 
+  php-apache:
+    container_name: php-apache
+    build: 
+      context: ./
+      dockerfile: php.Dockerfile
+    restart: always
+    volumes: 
+      - ./DocumentRoot:/var/www/html
+    links:
+      - 'mysqlserver'
+    networks: 
+      - 'net2'
+  mysqlserver:
+    container_name: mysqlserver
+    build: 
+      context: ./
+      dockerfile: mysql.Dockerfile
+    restart: always
+    volumes:
+      - database:/var/lib/mysql
+    networks: 
+      - 'net2'
+    environment:
+      TZ: "Europe/Warsaw"
+  apache:
+    container_name: apache
+    build:
+      context: ./
+      dockerfile: apacheHttpd.Dockerfile
+    restart: always
+    networks: 
+      - 'net2'
+      - 'net1'  
+    depends_on: 
+      - php-apache
+      - mysqlserver
+    ports: 
+      - 6666:80
+    volumes: 
+      - ./DocumentRoot:/usr/local/apache2/htdocs/
+volumes: 
+  database:
+networks:
+  net2:
+  net1:
